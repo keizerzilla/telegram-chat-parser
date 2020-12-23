@@ -2,7 +2,8 @@
 file:         telegram-chat-parser.py
 author:       Artur Rodrigues Rocha Neto
 email:        artur.rodrigues26@gmail.com
-github:       keizerzilla
+github:       https://github.com/keizerzilla
+created:      23/12/2020
 description:  Script to parse a Telegram chat history JSON file into a tabular format (CSV).
 requirements: Python 3.x
 """
@@ -21,7 +22,7 @@ if len(sys.argv) != 3:
 
 result_filepath = sys.argv[1]
 output_filepath = sys.argv[2]
-template = ["id", "from", "from_id", "date", "text", "reply_to_message_id"]
+template = ["id", "from", "from_id", "reply_to_message_id", "date", "text"]
 
 with open(result_filepath, "r", encoding="utf-8") as infile:
     with open(output_filepath, "w", encoding="utf-8") as outfile:
@@ -38,9 +39,9 @@ with open(result_filepath, "r", encoding="utf-8") as infile:
             id_ = message["id"]
             from_ = message["from"]
             from_id_ = message["from_id"]
+            reply_to_message_id_ = message["reply_to_message_id"] if "reply_to_message_id" in message else -1
             date_ = message["date"]
             text_ = message["text"]
-            reply_to_message_id_ = message["reply_to_message_id"] if "reply_to_message_id" in message else ""
             
             if type(text_) == list:
                 new_text = ""
@@ -57,9 +58,9 @@ with open(result_filepath, "r", encoding="utf-8") as infile:
                 "id"                  : id_,
                 "from"                : from_,
                 "from_id"             : from_id_,
+                "reply_to_message_id" : reply_to_message_id_,
                 "date"                : date_,
                 "text"                : text_,
-                "reply_to_message_id" : reply_to_message_id_,
             }
             
             writer.writerow(row)
