@@ -14,6 +14,21 @@ python3 telegram-chat-parser.py results.json dump.csv
 
 In the example above, we chose `dump.csv` as the file which the dataset will be stored, but you can name it whatever you want. The script has no output indicating it's done and should work everytime, as long as Telegram doesn't change it's format for backups.
 
+## The output format
+
+Once the script is done parsing, the resulted `CSV` file will have the format bellow:
+
+| id | from | from_id | reply_to_message_id | date | text | media_type |
+|----|------|---------|---------------------|------|------|------------|
+
+ - `id`: the unique identifier of the message
+ - `from`: the literal name of the sender
+ - `from_id`: the unique identifier of the sender
+ - `reply_to_message_id`: if the message is a reply, this column will store the id of that message, or -1 otherwise
+ - `date`: date time stamp of the message
+ - `text`: the text content the message, already cleaned in terms of newline and spaces; if the message was not a text (sticker, media, etc) this field will store a empty string
+ - `media_type`: if the message was some sort of media, this column will have its type, or an empty string otherwise
+
 ## Contributing
 
 I hope this little script helps you in your project! If you have any suggestions, critics or ideas to improve it, please feel free to open an issue. Thanks!
