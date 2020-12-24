@@ -40,7 +40,7 @@ with open(result_filepath, "r", encoding="utf-8") as infile:
             from_ = message["from"]
             from_id_ = message["from_id"]
             reply_to_message_id_ = message["reply_to_message_id"] if "reply_to_message_id" in message else -1
-            date_ = message["date"].replace("T", " ")
+            date_ = message["date"]
             text_ = message["text"]
             
             if type(text_) == list:
