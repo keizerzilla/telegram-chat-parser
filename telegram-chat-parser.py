@@ -22,7 +22,7 @@ if len(sys.argv) != 3:
 
 result_filepath = sys.argv[1]
 output_filepath = sys.argv[2]
-template = ["id", "from", "from_id", "reply_to_message_id", "date", "text"]
+template = ["id", "from", "from_id", "reply_to_message_id", "date", "text", "media_type"]
 
 with open(result_filepath, "r", encoding="utf-8") as infile:
     with open(output_filepath, "w", encoding="utf-8") as outfile:
@@ -33,7 +33,7 @@ with open(result_filepath, "r", encoding="utf-8") as infile:
         jdata = json.loads(contents)
         
         for message in jdata["messages"]:
-            if message["type"] != "message" or len(message["text"]) == 0:
+            if message["type"] != "message":
                 continue
             
             id_ = message["id"]
@@ -42,6 +42,7 @@ with open(result_filepath, "r", encoding="utf-8") as infile:
             reply_to_message_id_ = message["reply_to_message_id"] if "reply_to_message_id" in message else -1
             date_ = message["date"]
             text_ = message["text"]
+            media_type_ = message["media_type"] if "media_type" in message else ""
             
             if type(text_) == list:
                 new_text = ""
@@ -55,14 +56,13 @@ with open(result_filepath, "r", encoding="utf-8") as infile:
             text_ = text_.replace("\n", " ")
             
             row = {
-                "id"                  : id_,
-                "from"                : from_,
-                "from_id"             : from_id_,
+                "id" : id_,
+                "from" : from_,
+                "from_id" : from_id_,
                 "reply_to_message_id" : reply_to_message_id_,
-                "date"                : date_,
-                "text"                : text_,
+                "date" : date_,
+                "text" : text_,
+                "media_type" : media_type_
             }
             
             writer.writerow(row)
-
-print("Parse of {} into {} finished!".format(result_filepath, output_filepath))
