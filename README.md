@@ -1,3 +1,4 @@
+
 # telegram-chat-parser
 
 Python script to parse a Telegram chat history backup (`JSON`) into tabular format (`CSV`). No extra packages required, only Python 3.x!
@@ -18,16 +19,18 @@ In the example above, we chose `dump.csv` as the file which the parsed data will
 
 Once the script is done parsing, the result `CSV` file will have the format bellow:
 
-| id | from | from_id | reply_to_message_id | date | text | media_type |
-|----|------|---------|---------------------|------|------|------------|
-
- - `id`: the unique identifier of the message
- - `from`: the literal name of the sender
- - `from_id`: the unique identifier of the sender
- - `reply_to_message_id`: if the message is a reply, this column will store the id of that message, or -1 otherwise
+ - `msg_id`: the unique identifier of the message
+ - `sender`: the literal name of the sender
+ - `sender_id`: the unique identifier of the sender
+ - `reply_to_mesg_id`: if the message is a reply, this column will store the id of that message, or -1 otherwise
  - `date`: date time stamp of the message
- - `text`: the text content the message, already cleaned in terms of newline and spaces; if the message was not a text (sticker, media, etc) this field will store a empty string
- - `media_type`: if the message was some sort of media, this column will have its type, or an empty string otherwise
+ - `msg_type`:  can be one of the following: `text, sticker, file, photo, poll, location or link`
+ - `msg_content`: the text content the message, already cleaned in terms of newline and spaces; if the message was not a text (sticker, media, etc) this field will store the path pointing to the media
+ - `has_mention`: it will be `1` if there's a mention in the text, `0` otherwise
+ - `has_email`: it will be `1` if there's a email in the text, `0` otherwise
+ - `has_phone`: it will be `1` if there's a phone contact in the message, `0` otherwise
+ - `has_hashtag`: it will be `1` if there's a hashtag in the text, `0` otherwise
+ - `is_bot_command`: it will be `1` if the message is a bot command, `0` otherwise
 
 ## Contributing
 
