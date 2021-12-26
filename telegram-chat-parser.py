@@ -28,11 +28,8 @@ columns = ["msg_id",
             "sender_id",
             "reply_to_msg_id",
             "date",
-            "hour",
-            "weekday",
-            "year",
-            "msg_content",
             "msg_type",
+            "msg_content",
             "has_mention",
             "has_email",
             "has_phone",
@@ -66,11 +63,6 @@ with open(result_filepath, "r", encoding="utf-8") as infile:
             reply_to_msg_id = message["reply_to_message_id"] if "reply_to_message_id" in message else -1
             date = message["date"].replace("T", " ")
             dt = datetime.strptime(date, "%Y-%m-%d %H:%M:%S")
-            hour = dt.hour
-            weekday = dt.weekday()
-            year = dt.year
-            
-            # ------------------------------------------------------------------
             
             msg_content = message["text"]
             msg_type = "text"
@@ -79,7 +71,7 @@ with open(result_filepath, "r", encoding="utf-8") as infile:
                 msg_type = message["media_type"]
                 if message["media_type"] == "sticker":
                     if "sticker_emoji" in message:
-                        msg_content = message["sticker_emoji"]
+                        msg_content = message["file"]
                     else:
                         msg_content = "?"
                 elif message["media_type"] in file_types:
@@ -98,8 +90,6 @@ with open(result_filepath, "r", encoding="utf-8") as infile:
                 msg_type = "location"
                 loc = message["location_information"]
                 msg_content = str(loc["latitude"]) + "," + str(loc["longitude"])
-            
-            # ------------------------------------------------------------------
             
             has_mention = 0
             has_email = 0
@@ -131,19 +121,14 @@ with open(result_filepath, "r", encoding="utf-8") as infile:
             
             msg_content = msg_content.replace("\n", " ")
             
-            # ------------------------------------------------------------------
-            
             row = {
                 "msg_id"          : msg_id,
                 "sender"          : sender,
                 "sender_id"       : sender_id,
                 "reply_to_msg_id" : reply_to_msg_id,
                 "date"            : date,
-                "hour"            : hour,
-                "weekday"         : weekday,
-                "year"            : year,
-                "msg_content"     : msg_content,
                 "msg_type"        : msg_type,
+                "msg_content"     : msg_content,
                 "has_mention"     : has_mention,
                 "has_email"       : has_email,
                 "has_phone"       : has_phone,
