@@ -37,7 +37,7 @@ mention_types = ["mention",
 
 
 
-with open('result.json', encoding='utf8') as input_file:
+with open(result_filepath, encoding='utf8') as input_file:
     telegram_export = json.load(input_file)
 
 available_chat_names = [chat['name'] for chat in telegram_export['chats']['list'] if ('name' in chat) and chat['name'] != None]
