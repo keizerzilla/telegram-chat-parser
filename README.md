@@ -10,10 +10,10 @@ Using Telegram's Desktop or Web interfaces, go to the chat you want to backup, c
 Next, navigate to the directory where the `results.json` is located and make sure that the script is accessible, probably by placing it next to the results file. Then, run the script by typing:
 
 ```python
-python3 telegram-chat-parser.py results.json dump.csv
+python3 telegram-chat-parser.py results.json
 ```
 
-In the example above, we chose `dump.csv` as the file which the parsed data will be stored, but you can name it whatever you want. The script has no output indicating it's done and should work everytime quite fast, even for large chats, as long as Telegram doesn't change it's format for backups.
+For each chat backup in `results.json`, a `.csv` file will be created in the same directory. The output filename is a stripped down version of the actual chat name (only letters and numbers are kept).
 
 ## The output format
 
