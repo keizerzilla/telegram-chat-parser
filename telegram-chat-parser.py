@@ -43,10 +43,18 @@ mention_types = [
                  "mention_name",
                 ]
 
+null_name_counter = 0
 
 def parse_telegram_to_csv(jdata):
-    chat_name = re.sub(r'[\W_]+', u'', jdata["name"], flags=re.UNICODE)
+    
+    if jdata.get("name") is None:
+        global null_name_counter 
+        null_name_counter += 1
+        chat_name = f"UnnamedChat-{null_name_counter}"
+    else:
+        chat_name = re.sub(r'[\W_]+', u'', jdata.get("name"), flags=re.UNICODE)
     output_filepath = f"{chat_name}.csv"
+
     
     with open(output_filepath, "w", encoding="utf-8") as output_file:
         writer = csv.DictWriter(output_file, columns, dialect="unix", quoting=csv.QUOTE_NONNUMERIC)
