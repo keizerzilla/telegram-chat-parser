@@ -1,0 +1,6 @@
+# folders
+env/
+
+# general filetypes
+*.json
+*.csv
